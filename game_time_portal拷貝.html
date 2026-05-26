@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Time - 遊戲攻略大全</title>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: 導入古典襯線與精緻無襯線字體 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Noto+Serif+TC:wght@300;400;500;600;700&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 完美還原古典英文襯線體 */
+        .font-serif-elegant {
+            font-family: 'Cinzel', Georgia, serif;
+        }
+        /* 中文襯線體 */
+        .font-zh-serif {
+            font-family: 'Noto Serif TC', serif;
+        }
+        /* 精細無襯線（用於副標題、英文字與小字） */
+        .font-sans-clean {
+            font-family: 'Montserrat', sans-serif;
+        }
+        /* 皇家暗藍色向心漸層 */
+        .bg-royal-dark {
+            background: radial-gradient(circle at 50% 45%, #05263c 0%, #031929 55%, #010d16 100%);
+        }
+        /* 磨砂玻璃容器，帶有精細的邊緣高光與柔和陰影 */
+        .glass-panel {
+            background: rgba(8, 36, 56, 0.45);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 
+                inset 0 1px 1px rgba(255, 255, 255, 0.05),
+                0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        /* 身份過濾主卡片（微調深色調、帶有一抹古典香檳金微弱邊框） */
+        .glass-panel-gold {
+            background: rgba(4, 21, 35, 0.85);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(223, 186, 107, 0.18);
+            box-shadow: 
+                inset 0 1px 2px rgba(255, 255, 255, 0.05),
+                0 30px 60px -15px rgba(0, 0, 0, 0.8);
+        }
+        /* 精細毛玻璃按鈕 */
+        .glass-btn {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: inset 0 1px 0px rgba(255, 255, 255, 0.01);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .glass-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(223, 186, 107, 0.45);
+            box-shadow: 
+                0 0 15px rgba(223, 186, 107, 0.1),
+                inset 0 1px 0px rgba(255, 255, 255, 0.05);
+            transform: translateY(-2px);
+        }
+        
+        /* 專門用來標記當前選中標籤的發光樣式 */
+        .glass-btn-active {
+            background: rgba(223, 186, 107, 0.08) !important;
+            border-color: rgba(223, 186, 107, 0.5) !important;
+            box-shadow: 
+                0 0 20px rgba(223, 186, 107, 0.15),
+                inset 0 1px 0px rgba(255, 255, 255, 0.1) !important;
+        }
+
+        /* 身份選項專屬按鈕樣式 */
+        .identity-btn {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .identity-btn:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(223, 186, 107, 0.25);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* 橫線裝飾 */
+        .deco-line {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(223, 186, 107, 0.4) 50%, transparent);
+            width: 80px;
+        }
+
+        /* 呼吸燈效果 */
+        .animate-pulse-slow {
+            animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        /* 滾動條樣式優化 */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(223, 186, 107, 0.2);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(223, 186, 107, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-royal-dark min-h-screen flex flex-col justify-between items-center relative overflow-x-hidden text-white/90 select-none antialiased transition-all duration-700">
+
+    <!-- 背景典雅視覺光暈 -->
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-sky-500/5 blur-[120px] pointer-events-none rounded-full"></div>
+    <div class="absolute bottom-10 left-10 w-[300px] h-[300px] bg-amber-500/[0.02] blur-[100px] pointer-events-none rounded-full"></div>
+
+    <!-- 背景極微斜網格格線 -->
+    <div class="absolute inset-0 opacity-[0.015] pointer-events-none z-0" 
+         style="background-image: linear-gradient(45deg, #ffffff 25%, transparent 25%, transparent 50%, #ffffff 50%, #ffffff 75%, transparent 75%, transparent); background-size: 5px 5px;">
+    </div>
+
+
+    <!-- ======================================================= -->
+    <!-- SECTION 1: 遊戲選擇大廳首頁 (HUB VIEW) -->
+    <!-- ======================================================= -->
+    <div id="hubView" class="w-full flex-grow flex flex-col items-center justify-between z-10 transition-all duration-500 py-12">
+        
+        <!-- 空白頂部，維持與截圖高度一致 -->
+        <div class="h-4"></div>
+
+        <!-- 核心中央主顯區域 -->
+        <div class="flex flex-col items-center justify-center w-full max-w-6xl px-4 my-auto">
+            <!-- 上方微小導言字 -->
+            <span class="font-sans-clean text-[10px] md:text-[11px] font-medium tracking-[0.45em] text-white/35 uppercase mb-4 pl-[0.45em]">
+                Game Guide Portal
+            </span>
+
+            <!-- 主標題 GAME TIME -->
+            <h1 class="font-serif-elegant text-[54px] sm:text-7xl md:text-[85px] font-normal tracking-[0.09em] text-[#dfba6b] leading-none mb-6 drop-shadow-[0_4px_12px_rgba(0,0,0,0.4)]">
+                GAME TIME
+            </h1>
+
+            <!-- 副標題（帶有精緻古典金色對稱裝飾線） -->
+            <div class="flex items-center gap-6 mb-12 md:mb-16 w-full justify-center">
+                <div class="deco-line"></div>
+                <h2 class="font-zh-serif text-base sm:text-lg md:text-[20px] font-light tracking-[0.45em] text-[#dfba6b]/95 pl-[0.45em] whitespace-nowrap">
+                    遊戲攻略大全網站
+                </h2>
+                <div class="deco-line"></div>
+            </div>
+
+            <!-- 遊戲選擇主面板 (高質感圓角膠囊型面板) -->
+            <div class="glass-panel rounded-[2rem] sm:rounded-[2.8rem] p-6 sm:p-8 md:p-10 w-full max-w-[940px] flex flex-col items-center gap-6 sm:gap-8">
+                
+                <!-- 遊戲按鈕網格 -->
+                <div class="grid grid-cols-2 md:flex md:flex-row gap-3 sm:gap-4 w-full justify-center">
+                    
+                    <!-- 按鈕 1: 原神 -->
+                    <button onclick="selectGame('原神', 'GENSHIN')" class="glass-btn flex flex-col items-center justify-center px-4 py-4 sm:py-5 rounded-[1.2rem] md:rounded-full md:w-[158px] aspect-[1.5/1] md:aspect-auto">
+                        <span class="font-zh-serif text-white/90 font-medium text-[15px] sm:text-[16px] tracking-wide mb-1">原神</span>
+                        <span class="font-sans-clean text-[9px] text-white/35 tracking-wider font-light uppercase">Genshin Impact</span>
+                    </button>
+
+                    <!-- 按鈕 2: 崩壞：星穹鐵道 -->
+                    <button onclick="selectGame('崩壞：星穹鐵道', 'STARRAIL')" class="glass-btn flex flex-col items-center justify-center px-4 py-4 sm:py-5 rounded-[1.2rem] md:rounded-full md:w-[158px] aspect-[1.5/1] md:aspect-auto">
+                        <span class="font-zh-serif text-white/90 font-medium text-[15px] sm:text-[16px] tracking-wide mb-1">崩壞：星穹鐵道</span>
+                        <span class="font-sans-clean text-[9px] text-white/35 tracking-wider font-light uppercase">Honkai: Star Rail</span>
+                    </button>
+
+                    <!-- 按鈕 3: 鳴潮 -->
+                    <button onclick="selectGame('鳴潮', 'WUTHERING')" class="glass-btn flex flex-col items-center justify-center px-4 py-4 sm:py-5 rounded-[1.2rem] md:rounded-full md:w-[158px] aspect-[1.5/1] md:aspect-auto">
+                        <span class="font-zh-serif text-white/90 font-medium text-[15px] sm:text-[16px] tracking-wide mb-1">鳴潮</span>
+                        <span class="font-sans-clean text-[9px] text-white/35 tracking-wider font-light uppercase">Wuthering Waves</span>
+                    </button>
+
+                    <!-- 按鈕 4: 絕區零 -->
+                    <button onclick="selectGame('絕區零', 'ZZZ')" class="glass-btn flex flex-col items-center justify-center px-4 py-4 sm:py-5 rounded-[1.2rem] md:rounded-full md:w-[158px] aspect-[1.5/1] md:aspect-auto">
+                        <span class="font-zh-serif text-white/90 font-medium text-[15px] sm:text-[16px] tracking-wide mb-1">絕區零</span>
+                        <span class="font-sans-clean text-[9px] text-white/35 tracking-wider font-light uppercase">Zenless Zone Zero</span>
+                    </button>
+
+                    <!-- 按鈕 5: 重返未來：1999 -->
+                    <button onclick="selectGame('重返未來：1999', 'REVERSE1999')" class="glass-btn flex flex-col items-center justify-center px-4 py-4 sm:py-5 rounded-[1.2rem] md:rounded-full md:w-[158px] aspect-[1.5/1] md:aspect-auto col-span-2 md:col-span-1">
+                        <span class="font-zh-serif text-white/90 font-medium text-[15px] sm:text-[16px] tracking-wide mb-1">重返未來：1999</span>
+                        <span class="font-sans-clean text-[9px] text-white/35 tracking-wider font-light uppercase">Reverse: 1999</span>
+                    </button>
+
+                </div>
+
+                <!-- 下方圓形搜尋按鈕 -->
+                <button onclick="openSearchModal()" class="w-12 h-12 rounded-full border border-white/10 bg-white/5 flex items-center justify-center text-white/60 hover:text-[#dfba6b] hover:border-[#dfba6b]/40 hover:bg-white/10 hover:shadow-[0_0_15px_rgba(223,186,107,0.15)] transition-all duration-300 active:scale-95" title="搜尋攻略">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.602 10.602Z" />
+                    </svg>
+                </button>
+
+            </div>
+        </div>
+
+        <!-- 頁尾 -->
+        <div class="w-full text-center pb-2 z-10">
+            <p class="font-sans-clean text-[10px] font-normal tracking-[0.5em] text-white/20 uppercase pl-[0.5em]">
+                British Formal Immersion
+            </p>
+        </div>
+    </div>
+
+
+    <!-- ======================================================= -->
+    <!-- SECTION 2: 攻略詳細主控台 (DETAIL GUIDE HUB VIEW) -->
+    <!-- ======================================================= -->
+    <div id="detailView" class="hidden w-full max-w-7xl mx-auto px-4 md:px-8 py-8 z-10 flex flex-col justify-start gap-8 opacity-0 transition-all duration-500">
+        
+        <!-- 頂部列：返回與狀態 -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 w-full">
+            
+            <!-- 返回與主標題與勳章 -->
+            <div class="flex flex-col gap-2">
+                <!-- 返回大廳按鈕 -->
+                <button onclick="backToHub()" class="flex items-center gap-2 text-[10px] font-sans-clean text-white/40 hover:text-[#dfba6b] transition-all tracking-[0.3em] uppercase w-fit group">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-3 h-3 transform group-hover:-translate-x-1 transition-transform">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                    </svg>
+                    BACK TO HUB
+                </button>
+                
+                <!-- 遊戲大標題 (如 STARRAIL) + 勳章 -->
+                <div class="flex flex-wrap items-center gap-4 mt-1">
+                    <h2 id="detailGameTitle" class="font-serif-elegant text-4xl md:text-5xl font-medium tracking-[0.06em] text-[#dfba6b]">
+                        STARRAIL
+                    </h2>
+                    
+                    <!-- 專用身份勳章 (金絲盾牌型) -->
+                    <div class="flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#dfba6b]/30 bg-[#dfba6b]/5 text-[#dfba6b] text-[11px] font-zh-serif tracking-wider shadow-[inset_0_1px_4px_rgba(223,186,107,0.1)]">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3.5 h-3.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+                        </svg>
+                        <span id="detailIdentityBadge">無課金 專用攻略</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右上角 數據狀態 -->
+            <div class="flex items-center gap-2 px-4 py-2 rounded-full border border-emerald-500/10 bg-emerald-500/5 text-emerald-400/90 text-xs font-zh-serif tracking-wider self-start sm:self-center">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse-slow shadow-[0_0_8px_rgba(52,211,153,0.6)]"></span>
+                數據實時更新中
+            </div>
+
+        </div>
+
+        <!-- 主體排版：左2/3，右1/3 -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 w-full items-start">
+            
+            <!-- 【左半部】Tabs + 大攻略主版 (佔 2 欄) -->
+            <div class="lg:col-span-2 flex flex-col gap-5 w-full">
+                
+                <!-- 三大類別 Tab 鈕 -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5 w-full">
+                    
+                    <!-- Tab 1: 角色養成 -->
+                    <button id="tab-build" onclick="switchTab('build')" class="glass-btn glass-btn-active flex flex-col items-start p-5 rounded-[1.3rem] text-left w-full">
+                        <div class="w-10 h-10 rounded-xl border border-white/10 flex items-center justify-center bg-white/5 text-[#dfba6b]/85 mb-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.109A11.386 11.386 0 0 1 10.089 18H9.911a11.369 11.369 0 0 1-4.917-1.237v-.109c0-1.113.285-2.16.786-3.07M19.5 9.75a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM9 5.25a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6.993 0a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM6 12.75a4.125 4.125 0 0 0-7.533 2.493 9.337 9.337 0 0 0 4.121.952 9.38 9.38 0 0 0 2.625-.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493Z" />
+                            </svg>
+                        </div>
+                        <h4 class="font-zh-serif text-[15px] font-medium text-white tracking-wide mb-1">角色養成</h4>
+                        <p class="font-zh-serif text-[11px] text-white/35 font-light">最強配置與配隊建議</p>
+                    </button>
+
+                    <!-- Tab 2: 開局指南 -->
+                    <button id="tab-start" onclick="switchTab('start')" class="glass-btn flex flex-col items-start p-5 rounded-[1.3rem] text-left w-full">
+                        <div class="w-10 h-10 rounded-xl border border-white/10 flex items-center justify-center bg-white/5 text-[#dfba6b]/85 mb-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 6.75V15m6-6v8m-6-3h.008v.008H9V12Zm6 3h.008v.008H15V15Zm0-6h.008v.008H15V9Zm-6 0h.008v.008H9V9Zm9 9a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                        </div>
+                        <h4 class="font-zh-serif text-[15px] font-medium text-white tracking-wide mb-1">開局指南</h4>
+                        <p class="font-zh-serif text-[11px] text-white/35 font-light">快速上手、避坑指南</p>
+                    </button>
+
+                    <!-- Tab 3: 劇情關卡 -->
+                    <button id="tab-story" onclick="switchTab('story')" class="glass-btn flex flex-col items-start p-5 rounded-[1.3rem] text-left w-full">
+                        <div class="w-10 h-10 rounded-xl border border-white/10 flex items-center justify-center bg-white/5 text-[#dfba6b]/85 mb-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
+                            </svg>
+                        </div>
+                        <h4 class="font-zh-serif text-[15px] font-medium text-white tracking-wide mb-1">劇情關卡</h4>
+                        <p class="font-zh-serif text-[11px] text-white/35 font-light">完整流程與機制解析</p>
+                    </button>
+
+                </div>
+
+                <!-- 核心大卡片區：顯示精華攻略 / 或載入中狀態 -->
+                <div class="glass-panel rounded-[2rem] p-8 md:p-12 min-h-[460px] flex flex-col items-center justify-center relative overflow-hidden">
+                    
+                    <!-- A. 載入中狀態 (完美對應截圖三中央) -->
+                    <div id="loaderState" class="flex flex-col items-center justify-center text-center max-w-[500px] gap-6 transition-all duration-300">
+                        
+                        <!-- 虛線外圓圈內嵌指南針地圖 Icon -->
+                        <div class="relative w-28 h-28 flex items-center justify-center">
+                            <!-- 外圈虛線 -->
+                            <div class="absolute inset-0 rounded-full border border-dashed border-[#dfba6b]/40 animate-[spin_40s_linear_infinite]"></div>
+                            <!-- 內圈微光 -->
+                            <div class="absolute w-24 h-24 rounded-full border border-[#dfba6b]/10 bg-white/[0.01]"></div>
+                            <!-- 金色指南針 Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.2" stroke="currentColor" class="w-10 h-10 text-[#dfba6b]/80 animate-[pulse_2.5s_infinite]">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25s-7.5-4.108-7.5-11.25a7.5 7.5 0 1 1 15 0Z" />
+                            </svg>
+                        </div>
+
+                        <!-- 載入中標題 -->
+                        <h3 class="font-zh-serif text-2xl font-light text-white tracking-[0.15em]">
+                            精華攻略載入中
+                        </h3>
+
+                        <!-- 載入中動態副說明 -->
+                        <p id="loaderSubtitle" class="font-zh-serif text-xs md:text-sm text-white/45 tracking-wider leading-relaxed">
+                            正在為您的「無課金」身分優化攻略數據庫，請稍候片刻。
+                        </p>
+                    </div>
+
+                    <!-- B. 攻略實際內容呈現 (自動淡入) -->
+                    <div id="guideContentState" class="hidden w-full flex-col gap-6 text-left opacity-0 transition-all duration-500">
+                        <!-- 攻略內容會由 JavaScript 根據 Game 與 Tab 與 Identity 動態生成 -->
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- 【右半部】公告板 + 匿名論壇 + 底部意見箱 (佔 1 欄) -->
+            <div class="flex flex-col gap-5 w-full">
+                
+                <!-- 1. ANNOUNCEMENTS 公告板 -->
+                <div class="glass-panel rounded-[1.8rem] p-6 flex flex-col gap-5">
+                    <div class="flex justify-between items-center pb-2 border-b border-white/5">
+                        <span class="font-serif-elegant text-xs font-semibold tracking-[0.25em] text-[#dfba6b] uppercase">ANNOUNCEMENTS</span>
+                        <a href="#" onclick="showToast('已開啟所有歷史公告歸檔'); return false;" class="font-sans-clean text-[10px] text-white/30 hover:text-[#dfba6b] transition-colors uppercase tracking-wider">View All</a>
+                    </div>
+                    
+                    <div class="flex flex-col gap-4">
+                        <!-- 公告 1 -->
+                        <div class="flex flex-col gap-1.5 group cursor-pointer" onclick="showToast('《沉浸式氛圍優化指南》完整文檔加載中...')">
+                            <div class="flex items-center gap-2">
+                                <span class="px-2 py-0.5 rounded text-[9px] font-zh-serif bg-[#dfba6b]/15 text-[#dfba6b] border border-[#dfba6b]/20">公告</span>
+                                <span class="font-sans-clean text-[10px] text-white/25">2026.05.19</span>
+                            </div>
+                            <p class="font-zh-serif text-xs text-white/70 group-hover:text-[#dfba6b] transition-colors leading-relaxed">
+                                【版本更新】V2.3 沉浸式氛圍優化指南
+                            </p>
+                        </div>
+
+                        <!-- 公告 2 -->
+                        <div class="flex flex-col gap-1.5 group cursor-pointer" onclick="showToast('大賽參與說明與投稿通道載入中...')">
+                            <div class="flex items-center gap-2">
+                                <span class="px-2 py-0.5 rounded text-[9px] font-zh-serif bg-[#dfba6b]/15 text-[#dfba6b] border border-[#dfba6b]/20">活動</span>
+                                <span class="font-sans-clean text-[10px] text-white/25">2026.05.18</span>
+                            </div>
+                            <p class="font-zh-serif text-xs text-white/70 group-hover:text-[#dfba6b] transition-colors leading-relaxed">
+                                【活動內容】尋找黃金比例：攝影大賽開啟
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. PLAYER FORUM 匿名玩家論壇 -->
+                <div class="glass-panel rounded-[1.8rem] p-6 flex flex-col gap-5">
+                    <div class="flex justify-between items-center pb-2 border-b border-white/5">
+                        <span class="font-serif-elegant text-xs font-semibold tracking-[0.25em] text-[#dfba6b] uppercase">PLAYER FORUM</span>
+                        <span class="font-sans-clean text-[9px] text-[#dfba6b]/60 uppercase tracking-wider">Online</span>
+                    </div>
+
+                    <!-- 留言展示滾動區 -->
+                    <div id="forumCommentsContainer" class="flex flex-col gap-3 max-h-[220px] overflow-y-auto pr-1">
+                        <!-- 預設留言 1 -->
+                        <div class="bg-black/15 p-4 rounded-2xl border border-white/5 flex flex-col gap-1.5">
+                            <div class="flex justify-between items-center">
+                                <span class="font-zh-serif text-[11px] text-[#dfba6b]/80">匿名玩家01</span>
+                                <span class="font-sans-clean text-[9px] text-white/25">2 分鐘前</span>
+                            </div>
+                            <p class="font-zh-serif text-xs text-white/60 leading-relaxed">
+                                這次更新的暗色藍調真的很有質感，攻略也變準了。
+                            </p>
+                        </div>
+
+                        <!-- 預設留言 2 -->
+                        <div class="bg-black/15 p-4 rounded-2xl border border-white/5 flex flex-col gap-1.5">
+                            <div class="flex justify-between items-center">
+                                <span class="font-zh-serif text-[11px] text-[#dfba6b]/80">匿名玩家02</span>
+                                <span class="font-sans-clean text-[9px] text-white/25">4 分鐘前</span>
+                            </div>
+                            <p class="font-zh-serif text-xs text-white/60 leading-relaxed">
+                                求開局微課在目前版本的抽卡規劃，資源有點緊。
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- 發言輸入框 -->
+                    <div class="relative mt-2">
+                        <input type="text" id="forumInput" placeholder="發表玩家意見..." class="w-full bg-white/5 border border-white/10 rounded-full py-2.5 pl-4 pr-10 text-xs text-white placeholder-white/25 focus:outline-none focus:border-[#dfba6b]/40 focus:bg-white/10 transition-all font-zh-serif">
+                        <button onclick="submitForumComment()" class="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full text-white/30 hover:text-[#dfba6b] transition-colors">
+                            <!-- 發送紙飛機 SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-3.5 h-3.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 3. FEEDBACK 意見箱按鈕 -->
+                <button onclick="openFeedbackModal()" class="w-full glass-panel rounded-2xl p-4 flex items-center justify-between group hover:border-[#dfba6b]/30 hover:shadow-[0_4px_20px_rgba(223,186,107,0.08)] transition-all duration-300">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-[#dfba6b] group-hover:bg-[#dfba6b]/10 transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 12a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Zm0 0c0 1.657 1.007 3 2.25 3S21 13.657 21 12a9 9 0 1 0-2.636 6.364M16.5 12V8.25" />
+                            </svg>
+                        </div>
+                        <span class="font-zh-serif text-[13px] font-medium text-white/70 group-hover:text-[#dfba6b] transition-colors">意見箱 (Feedback)</span>
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4 text-white/20 group-hover:text-[#dfba6b]/60 transition-all transform group-hover:translate-x-1">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                    </svg>
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ======================================================= -->
+    <!-- MODALS: 互動視窗 (模態框) -->
+    <!-- ======================================================= -->
+
+    <!-- ★ 截圖二完美還原：身分過濾機制模態視窗 ★ -->
+    <div id="identityModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#01090f]/60 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300">
+        <div class="glass-panel-gold w-full max-w-[460px] rounded-[2.2rem] p-8 sm:p-10 transform scale-95 transition-all duration-300 flex flex-col items-center" id="identityContent">
+            
+            <!-- 頂部金色微標題 -->
+            <span class="font-sans-clean text-[10px] font-medium tracking-[0.35em] text-[#dfba6b] uppercase mb-2">
+                THE IDENTITY MODAL
+            </span>
+            
+            <!-- 主標題：身分過濾機制 -->
+            <h3 class="font-zh-serif text-2xl sm:text-3xl text-[#dfba6b] tracking-widest mb-3 font-normal">
+                身分過濾機制
+            </h3>
+            
+            <!-- 副標題 -->
+            <p class="text-[11px] sm:text-[12px] text-white/50 tracking-wider text-center font-zh-serif mb-8 leading-relaxed max-w-[320px]">
+                請選擇您的玩家屬性，我們將為您匹配最精準的攻略資訊。
+            </p>
+
+            <!-- 三種身分選項按鈕 -->
+            <div class="space-y-3.5 w-full mb-8">
+                
+                <!-- 選項一：有課金 -->
+                <button onclick="confirmIdentity('有課金')" class="identity-btn w-full flex items-center p-4 rounded-2xl text-left">
+                    <div class="w-11 h-11 rounded-full border border-white/10 flex items-center justify-center bg-white/5 mr-4 text-[#dfba6b]/80 flex-shrink-0">
+                        <!-- 皮夾錢包圖標 -->
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a2.25 2.25 0 0 0-2.25-2.25H15a3 3 0 1 1-6 0H5.25A2.25 2.25 0 0 0 3 12m18 0v6a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 18v-6m18 0V9M3 12V9m18-3a2.25 2.25 0 0 0-2.25-2.25H5.25A2.25 2.25 0 0 0 3 6" />
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="font-zh-serif text-white/90 text-sm font-medium tracking-wider">【有課金】</div>
+                        <div class="text-[11px] text-white/35 font-zh-serif tracking-wide mt-0.5">頂級配置、最優化攻略</div>
+                    </div>
+                </button>
+
+                <!-- 選項二：微課金 -->
+                <button onclick="confirmIdentity('微課金')" class="identity-btn w-full flex items-center p-4 rounded-2xl text-left">
+                    <div class="w-11 h-11 rounded-full border border-white/10 flex items-center justify-center bg-white/5 mr-4 text-[#dfba6b]/80 flex-shrink-0">
+                        <!-- 金幣/雙幣圖標 -->
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="font-zh-serif text-white/90 text-sm font-medium tracking-wider">【微課金】</div>
+                        <div class="text-[11px] text-white/35 font-zh-serif tracking-wide mt-0.5">性價比導向、成長建議</div>
+                    </div>
+                </button>
+
+                <!-- 選項三：無課金 -->
+                <button onclick="confirmIdentity('無課金')" class="identity-btn w-full flex items-center p-4 rounded-2xl text-left">
+                    <div class="w-11 h-11 rounded-full border border-white/10 flex items-center justify-center bg-white/5 mr-4 text-[#dfba6b]/80 flex-shrink-0">
+                        <!-- 個人/用戶圖標 -->
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="font-zh-serif text-white/90 text-sm font-medium tracking-wider">【無課金】</div>
+                        <div class="text-[11px] text-white/35 font-zh-serif tracking-wide mt-0.5">平民戰神、資源最大化</div>
+                    </div>
+                </button>
+
+            </div>
+
+            <!-- 取消/返回 -->
+            <button onclick="closeIdentityModal()" class="font-sans-clean text-[10px] text-[#dfba6b]/55 hover:text-[#dfba6b] tracking-[0.4em] uppercase transition-colors pl-[0.4em] active:scale-95">
+                CANCEL / 返回
+            </button>
+
+        </div>
+    </div>
+
+    <!-- 搜尋攻略模態框 -->
+    <div id="searchModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300">
+        <div class="glass-panel w-full max-w-lg rounded-[2rem] p-6 sm:p-8 transform scale-95 transition-all duration-300" id="searchContent">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="font-zh-serif text-lg text-[#dfba6b] tracking-wider">搜尋全站攻略</h3>
+                <button onclick="closeSearchModal()" class="text-white/40 hover:text-white transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="relative mb-4">
+                <input type="text" id="searchInput" placeholder="輸入關鍵字，例如：原神 聖遺物、鳴潮 首抽..." class="w-full bg-white/5 border border-white/10 rounded-full py-3 px-5 text-white placeholder-white/25 focus:outline-none focus:border-[#dfba6b]/50 focus:bg-white/10 transition-all font-zh-serif text-sm">
+                <button onclick="triggerSearch()" class="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-[#dfba6b] transition-colors p-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.602 10.602Z" />
+                    </svg>
+                </button>
+            </div>
+            <!-- 推薦搜尋詞 -->
+            <div class="flex flex-wrap gap-2 text-xs text-white/55">
+                <span class="mr-2 self-center text-white/30">熱門：</span>
+                <button onclick="quickSearch('原神 隊伍')" class="px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/10 hover:text-[#dfba6b] transition-all">原神 隊伍</button>
+                <button onclick="quickSearch('鳴潮 音骸')" class="px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/10 hover:text-[#dfba6b] transition-all">鳴潮 音骸</button>
+                <button onclick="quickSearch('星穹鐵道 遺器')" class="px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/10 hover:text-[#dfba6b] transition-all">遺器推薦</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 意見回饋模態框 -->
+    <div id="feedbackModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300">
+        <div class="glass-panel w-full max-w-md rounded-[2rem] p-6 sm:p-8 transform scale-95 transition-all duration-300" id="feedbackContent">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="font-zh-serif text-lg text-[#dfba6b] tracking-wider">聯絡與意見回饋</h3>
+                <button onclick="closeFeedbackModal()" class="text-white/40 hover:text-white transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs text-[#dfba6b] mb-1.5 font-sans-clean uppercase tracking-wider">Your Message</label>
+                    <textarea id="feedbackText" rows="4" placeholder="請輸入您對此網站的建議或遇到的問題..." class="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-white placeholder-white/20 focus:outline-none focus:border-[#dfba6b]/50 focus:bg-white/10 transition-all font-zh-serif text-sm resize-none"></textarea>
+                </div>
+                <button onclick="submitFeedback()" class="w-full py-3 rounded-full bg-[#dfba6b] hover:bg-[#ebd095] text-[#031929] font-zh-serif font-bold text-sm tracking-widest transition-all shadow-lg active:scale-95 flex items-center justify-center gap-2">
+                    <span>送出訊息</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 自定義通知浮窗 (Toast) -->
+    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 z-50 glass-panel px-6 py-3.5 rounded-full border border-[#dfba6b]/30 shadow-2xl opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-[#dfba6b] animate-pulse"></span>
+        <span id="toastMsg" class="font-zh-serif text-sm tracking-wide text-white/95"></span>
+    </div>
+
+
+    <!-- ======================================================= -->
+    <!-- JAVASCRIPT: 業務與交互邏輯 -->
+    <!-- ======================================================= -->
+    <script>
+        // 1. 全域變數定義
+        let currentGameName = '';      // 儲存中文名，如 "崩壞：星穹鐵道"
+        let currentGameEn = '';        // 儲存英文簡寫名，如 "STARRAIL"
+        let currentIdentity = '';      // 儲存身分屬性，如 "無課金"
+        let currentActiveTab = 'build'; // 儲存目前在攻略頁點選的 Tab: 'build' | 'start' | 'story'
+
+        // 模擬攻略數據庫
+        const guidesDatabase = {
+            'STARRAIL': {
+                'build': {
+                    '無課金': {
+                        title: '無課金星瓊規劃與主流平民隊伍推薦',
+                        points: [
+                            '【核心思路】：集中資源抽取「萬能輔助」，其餘角色一律使用免費贈送的平民四星戰神。',
+                            '【隊伍推薦】：由主攻角色「青雀」搭配免費贈送的「停雲」與「娜塔莎」，攻守兼備且成型極快。',
+                            '【光錐推薦】：優先前往忘卻之庭商店兌換免費精五光錐，切忌在無克金狀態下強行抽取五星專屬光錐。'
+                        ]
+                    },
+                    '微課金': {
+                        title: '大月卡玩家最佳配置與命途養成指南',
+                        points: [
+                            '【核心思路】：購買大小月卡後，星瓊應優先用來補強「限定主力核心」的1魂或核心光錐。',
+                            '【隊伍推薦】：主攻角色「黃泉」或「流螢」隊伍，搭配大月卡光錐能將輸出提升至全新次元。',
+                            '【資源分配】：將大月卡贈送的自選材料優先投入行跡等級，確保主力輸出行跡全部點滿。'
+                        ]
+                    },
+                    '有課金': {
+                        title: '全限定五星滿魂配置與頂級配隊通關考量',
+                        points: [
+                            '【隊伍推薦】：頂配「黃泉+花火+椒丘」或「流螢+阮梅+同諧主角」黃金體系，輕鬆秒殺混沌回憶。',
+                            '【配裝極限】：主C一律配置滿疊影專屬光錐，遺器暴擊傷害副屬性追求極致，副C全配高速套裝。',
+                            '【抽卡規劃】：後續新體系一律預留滿魂預算，確保能在全玩法中達成0回合通關完美戰績。'
+                        ]
+                    }
+                },
+                'start': {
+                    '無課金': {
+                        title: '零課新人開局快速獲取100抽指南',
+                        points: [
+                            '【開局避坑】：不要將星瓊浪費在常駐普通卡池中，所有贈送的通票抽完後即可轉向限定卡池。',
+                            '【開荒核心】：優先拉滿三月七與開拓者（存護），她們是前期最穩定的生存防護保障。',
+                            '【等級提升】：首週將所有開拓力（體力）用於打經驗書與金幣本，不要提前刷遺器副本以免浪費。'
+                        ]
+                    },
+                    '微課金': {
+                        title: '高性價比大月卡資源最佳回報開局',
+                        points: [
+                            '【首購指南】：首充雙倍星瓊建議保留給跨時代的輔助角色，大月卡光錐優先選擇「今日亦是和平的一日」。',
+                            '【行跡加速】：利用大月卡材料包迅速突破主力輸出，不走彎路直接在35級通關模擬宇宙高難度。'
+                        ]
+                    },
+                    '有課金': {
+                        title: '首日極速滿級與完美的遺器規劃路徑',
+                        points: [
+                            '【極速升級】：每日開拓力買滿，迅速通關主線直達高等級，以最高掉落率刷取金色遺器。',
+                            '【星瓊規劃】：專注於限定人權角色的星魂抽取，直接建立跨版本的全屬性打手體系。'
+                        ]
+                    }
+                },
+                'story': {
+                    '無課金': {
+                        title: '低練度全平民陣容無傷通關主線 Boss',
+                        points: [
+                            '【機制解析】：遇到強力 Boss 應採用雙生存位（如三月七 + 娜塔莎），主打消耗戰與弱點擊破。',
+                            '【秘技使用】：進入戰鬥前，必須吃滿防禦類、生命值回复料理，並開滿所有角色防護秘技。'
+                        ]
+                    },
+                    '微課金': {
+                        title: '高性價比體系快速破盾通關流派',
+                        points: [
+                            '【戰術配置】：善用限定五星輔助的增益，看準 Boss 機制階段，使用大招插隊進行弱點強破。'
+                        ]
+                    },
+                    '有課金': {
+                        title: '一回合瞬殺與極速降維打擊通關策略',
+                        points: [
+                            '【戰術配置】：極致的主C速度搭配增傷神角，在 Boss 出手前直接以爆發傷害打空血條，無視所有機制。'
+                        ]
+                    }
+                }
+            },
+            'GENSHIN': {
+                'build': {
+                    '無課金': {
+                        title: '零課金深境螺旋平民國家隊養成',
+                        points: [
+                            '【隊伍配置】：經典「香菱+行秋+班尼特+重雲/糖」，成本極低且具備完美的元素反應循環。',
+                            '【武器推薦】：前往釣魚協會兌換「漁獲」給香菱，這是堪比五星神器的最強免費四星武器。'
+                        ]
+                    },
+                    '微課金': {
+                        title: '小月卡黨主力命座與紀行武器搭配',
+                        points: [
+                            '【武器配置】：購買紀行（大月卡）取得「螭骨劍」或「決鬥之槍」，極大程度緩解主力雙暴面板壓力。'
+                        ]
+                    },
+                    '有課金': {
+                        title: '滿命限定五星核爆輸出與終極體系',
+                        points: [
+                            '【隊伍配置】：頂配「納西妲+芙寧娜+影+夜蘭」終極體系，全隊命座拉滿，隨意割草大世界與深淵。'
+                        ]
+                    }
+                },
+                'start': {
+                    '無課金': {
+                        title: '新手探索大世界避坑指南',
+                        points: [
+                            '【開荒重點】：優先解鎖地圖神瞳與傳送點，免費的「麗莎」與「凱亞」可以用來打超導和感電反應。'
+                        ]
+                    },
+                    '微課金': {
+                        title: '首充資源在限定卡池的最大回報率',
+                        points: [
+                            '【抽卡策略】：不要分散投資，將資源集中抽取如「萬葉」、「鍾離」等能極大提升體驗的人權輔助。'
+                        ]
+                    },
+                    '有課金': {
+                        title: '首日速通大世界全功能解鎖路徑',
+                        points: [
+                            '【極速開荒】：利用星輝兌換與限定池抽取滿命強大打手，無壓力秒殺所有野外精英怪。'
+                        ]
+                    }
+                },
+                'story': {
+                    '無課金': {
+                        title: '平民陣容討伐周本與主線 Boss 逃票打法',
+                        points: [
+                            '【技巧】：利用「諾艾爾」的岩護盾與遠程射手放風箏，穩健磨死黃金屋與雷電將軍主線。'
+                        ]
+                    },
+                    '微課金': {
+                        title: '主線劇情完美機制應對與快速通關',
+                        points: [
+                            '【要點】：合理利用元素共鳴提升輸出，適當提升聖遺物等級，即可流暢觀看劇情。'
+                        ]
+                    },
+                    '有課金': {
+                        title: '主線劇情 Boss 秒殺秀',
+                        points: [
+                            '【極致震撼】：直接使用神級滿命角色一擊造成數百萬傷害，不給 Boss 任何機制轉換的機會。'
+                        ]
+                    }
+                }
+            }
+        };
+
+        // 2. 核心：大廳點擊選擇遊戲 -> 開啟身份過濾 modal
+        function selectGame(gameName, englishName) {
+            currentGameName = gameName;
+            currentGameEn = englishName;
+            
+            // 開啟截圖二的 identityModal
+            openIdentityModal();
+        }
+
+        // 開啟/關閉 身份過濾模態窗 (截圖二)
+        function openIdentityModal() {
+            const modal = document.getElementById('identityModal');
+            const content = document.getElementById('identityContent');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            content.classList.remove('scale-95');
+            content.classList.add('scale-100');
+        }
+
+        function closeIdentityModal() {
+            const modal = document.getElementById('identityModal');
+            const content = document.getElementById('identityContent');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+        }
+
+        // 3. 核心：選擇身份確認 -> 轉移至【截圖三攻略主控台】
+        function confirmIdentity(identityType) {
+            currentIdentity = identityType;
+            closeIdentityModal();
+            
+            // 轉換視窗
+            transitionToDetailView();
+        }
+
+        // 4. 動畫轉換到攻略主控台畫面 (截圖三)
+        function transitionToDetailView() {
+            const hubView = document.getElementById('hubView');
+            const detailView = document.getElementById('detailView');
+            
+            // 淡出主視圖
+            hubView.classList.add('opacity-0', 'pointer-events-none');
+            
+            setTimeout(() => {
+                hubView.classList.add('hidden');
+                detailView.classList.remove('hidden');
+                
+                // 動態設定頂部標題與勳章文字
+                document.getElementById('detailGameTitle').textContent = currentGameEn;
+                document.getElementById('detailIdentityBadge').textContent = `${currentIdentity} 專用攻略`;
+                
+                // 重設預設標籤
+                currentActiveTab = 'build';
+                updateTabHighlight();
+
+                // 顯示詳細頁並淡入
+                setTimeout(() => {
+                    detailView.classList.remove('opacity-0');
+                    // 執行精華攻略載入與展示
+                    loadActiveGuideContent();
+                }, 50);
+
+            }, 400);
+        }
+
+        // 5. 自主網頁：返回大廳首頁
+        function backToHub() {
+            const hubView = document.getElementById('hubView');
+            const detailView = document.getElementById('detailView');
+            
+            detailView.classList.add('opacity-0');
+            
+            setTimeout(() => {
+                detailView.classList.add('hidden');
+                hubView.classList.remove('hidden');
+                
+                setTimeout(() => {
+                    hubView.classList.remove('opacity-0', 'pointer-events-none');
+                }, 50);
+            }, 400);
+        }
+
+        // 6. 三個 Tab 的切換邏輯
+        function switchTab(tabId) {
+            if (currentActiveTab === tabId) return;
+            currentActiveTab = tabId;
+            
+            updateTabHighlight();
+            loadActiveGuideContent();
+        }
+
+        // 高亮當前選中的標籤按鈕
+        function updateTabHighlight() {
+            const tabs = ['build', 'start', 'story'];
+            tabs.forEach(t => {
+                const btn = document.getElementById(`tab-${t}`);
+                if (t === currentActiveTab) {
+                    btn.classList.add('glass-btn-active');
+                } else {
+                    btn.classList.remove('glass-btn-active');
+                }
+            });
+        }
+
+        // 7. 動態加載攻略內文 (包含旋轉指南針的載入狀態)
+        function loadActiveGuideContent() {
+            const loaderState = document.getElementById('loaderState');
+            const guideContentState = document.getElementById('guideContentState');
+            const loaderSubtitle = document.getElementById('loaderSubtitle');
+            
+            // 顯示載入中
+            loaderState.classList.remove('hidden', 'opacity-0');
+            guideContentState.classList.add('hidden', 'opacity-0');
+            loaderSubtitle.textContent = `正在為您的「${currentIdentity}」身分優化攻略數據庫，請稍候片刻。`;
+
+            // 模擬 1.2 秒高質感載入，隨後顯示驚艷圖文
+            setTimeout(() => {
+                loaderState.classList.add('opacity-0');
+                
+                setTimeout(() => {
+                    loaderState.classList.add('hidden');
+                    
+                    // 渲染內容
+                    renderGuideHTML();
+                    
+                    guideContentState.classList.remove('hidden');
+                    setTimeout(() => {
+                        guideContentState.classList.remove('opacity-0');
+                    }, 50);
+
+                }, 200);
+
+            }, 1200);
+        }
+
+        // 8. 根據選取的遊戲、身份與標籤產生極致渲染的攻略 HTML
+        function renderGuideHTML() {
+            const container = document.getElementById('guideContentState');
+            
+            // 嘗試從資料庫取資料，若不支援則使用預設公用版（如鳴潮、絕區零等）
+            const gameData = guidesDatabase[currentGameEn] || guidesDatabase['STARRAIL'];
+            const tabData = gameData[currentActiveTab] || gameData['build'];
+            const identityData = tabData[currentIdentity] || tabData['無課金'];
+
+            // 拼接精緻內容
+            let pointsHTML = '';
+            identityData.points.forEach(pt => {
+                pointsHTML += `
+                    <li class="flex items-start gap-3 bg-white/[0.02] border border-white/5 rounded-2xl p-4 sm:p-5 hover:bg-white/[0.04] hover:border-white/10 transition-all duration-300">
+                        <span class="w-1.5 h-1.5 rounded-full bg-[#dfba6b] mt-2 flex-shrink-0 animate-pulse"></span>
+                        <p class="font-zh-serif text-[13px] sm:text-[14px] text-white/80 leading-relaxed tracking-wide">${pt}</p>
+                    </li>
+                `;
+            });
+
+            container.innerHTML = `
+                <!-- 攻略標題 -->
+                <div class="flex flex-col gap-2 pb-4 border-b border-white/5">
+                    <span class="font-sans-clean text-[9px] font-semibold tracking-[0.3em] text-[#dfba6b] uppercase">MASTER GUIDE / 精華解鎖</span>
+                    <h3 class="font-zh-serif text-xl sm:text-2xl font-medium text-white tracking-wide">
+                        ${identityData.title}
+                    </h3>
+                </div>
+
+                <!-- 亮點要點清單 -->
+                <ul class="flex flex-col gap-3.5 mt-2">
+                    ${pointsHTML}
+                </ul>
+
+                <!-- 底部提示 -->
+                <div class="mt-4 p-4 rounded-xl bg-[#dfba6b]/5 border border-[#dfba6b]/10 text-center">
+                    <p class="font-zh-serif text-xs text-[#dfba6b]/70 tracking-wider">
+                        ★ 提示：本攻略已根據您的「${currentIdentity}」屬性進行資源配比優化。
+                    </p>
+                </div>
+            `;
+        }
+
+        // 9. 玩家匿名論壇發送功能
+        function submitForumComment() {
+            const input = document.getElementById('forumInput');
+            const commentText = input.value.trim();
+            if (!commentText) {
+                showToast('請輸入發言內容！');
+                return;
+            }
+
+            const container = document.getElementById('forumCommentsContainer');
+            
+            // 建立一筆精緻的留言節點
+            const newComment = document.createElement('div');
+            newComment.className = 'bg-black/25 p-4 rounded-2xl border border-[#dfba6b]/20 flex flex-col gap-1.5 opacity-0 -translate-y-4 transition-all duration-500';
+            newComment.innerHTML = `
+                <div class="flex justify-between items-center">
+                    <span class="font-zh-serif text-[11px] text-[#dfba6b] font-medium">匿名玩家 (您)</span>
+                    <span class="font-sans-clean text-[9px] text-[#dfba6b]/60">剛剛</span>
+                </div>
+                <p class="font-zh-serif text-xs text-white/85 leading-relaxed">
+                    ${commentText}
+                </p>
+            `;
+
+            // 置頂插入
+            container.insertBefore(newComment, container.firstChild);
+            
+            // 清空輸入
+            input.value = '';
+            
+            // 動畫淡入
+            setTimeout(() => {
+                newComment.classList.remove('opacity-0', '-translate-y-4');
+            }, 50);
+
+            showToast('發表成功！感謝參與玩家討論。');
+        }
+
+        // 按 Enter 送出論壇發言
+        document.getElementById('forumInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                submitForumComment();
+            }
+        });
+
+
+        // =======================================================
+        // 其他系統基礎交互 (搜尋、聯絡反饋、Toast)
+        // =======================================================
+        
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+            
+            toastMsg.textContent = message;
+            toast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+            toast.classList.add('translate-y-0');
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
+                toast.classList.remove('translate-y-0');
+            }, 3000);
+        }
+
+        function openSearchModal() {
+            const modal = document.getElementById('searchModal');
+            const content = document.getElementById('searchContent');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            content.classList.remove('scale-95');
+            content.classList.add('scale-100');
+            setTimeout(() => document.getElementById('searchInput').focus(), 150);
+        }
+
+        function closeSearchModal() {
+            const modal = document.getElementById('searchModal');
+            const content = document.getElementById('searchContent');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+        }
+
+        function quickSearch(keyword) {
+            document.getElementById('searchInput').value = keyword;
+            triggerSearch();
+        }
+
+        function triggerSearch() {
+            const input = document.getElementById('searchInput').value.trim();
+            if (input) {
+                showToast(`正在搜尋：${input}...`);
+                closeSearchModal();
+            } else {
+                showToast('請輸入搜尋關鍵字！');
+            }
+        }
+
+        function openFeedbackModal() {
+            const modal = document.getElementById('feedbackModal');
+            const content = document.getElementById('feedbackContent');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            content.classList.remove('scale-95');
+            content.classList.add('scale-100');
+        }
+
+        function closeFeedbackModal() {
+            const modal = document.getElementById('feedbackModal');
+            const content = document.getElementById('feedbackContent');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+        }
+
+        function submitFeedback() {
+            const text = document.getElementById('feedbackText').value.trim();
+            if (text) {
+                showToast('意見已成功投遞至後台！感謝您的支持。');
+                document.getElementById('feedbackText').value = '';
+                closeFeedbackModal();
+            } else {
+                showToast('請先輸入回饋內容！');
+            }
+        }
+
+        // 按 Enter 搜尋
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                triggerSearch();
+            }
+        });
+
+        // 點擊背景空白關閉
+        window.addEventListener('click', function(e) {
+            const identityModal = document.getElementById('identityModal');
+            const searchModal = document.getElementById('searchModal');
+            const feedbackModal = document.getElementById('feedbackModal');
+            
+            if (e.target === identityModal) closeIdentityModal();
+            if (e.target === searchModal) closeSearchModal();
+            if (e.target === feedbackModal) closeFeedbackModal();
+        });
+    </script>
+</body>
+</html>
